@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import NumberFlowComponent from "./NumberFlow";
 
 const Hero = () => {
   return (
@@ -16,6 +17,7 @@ const Hero = () => {
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
             Build your next idea even faster
           </h1>
+          <NumberFlowComponent value={4531} client:visible />
           <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             Beautifully designed components built with Radix UI and Tailwind
             CSS.
