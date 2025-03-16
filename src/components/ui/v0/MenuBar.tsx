@@ -136,7 +136,7 @@ export function MenuBar() {
               />
               <motion.a
                 href={item.href}
-                className="flex items-center gap-2 px-4 py-2 relative z-10 bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-xl"
+                className="flex items-center gap-2 px-4 py-2 relative z-10 bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-xl group"
                 variants={itemVariants}
                 transition={sharedTransition}
                 style={{
@@ -144,16 +144,21 @@ export function MenuBar() {
                   transformOrigin: "center bottom",
                 }}
               >
-                <span
-                  className={`transition-colors duration-300 ${item.iconColor}`}
-                >
-                  {item.icon}
+                <span className="text-gray-600 dark:text-gray-300 transition-colors duration-300 group-hover:text-inherit">
+                  <div
+                    className={`${item.iconColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  >
+                    {item.icon}
+                  </div>
+                  <div className="opacity-100 group-hover:opacity-0 transition-opacity duration-300 -mt-5">
+                    {item.icon}
+                  </div>
                 </span>
                 <span className="hidden sm:inline">{item.label}</span>
               </motion.a>
               <motion.a
                 href={item.href}
-                className="flex items-center gap-2 px-4 py-2 absolute inset-0 z-10 bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-xl"
+                className="flex items-center gap-2 px-4 py-2 absolute inset-0 z-10 bg-transparent text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors rounded-xl group"
                 variants={backVariants}
                 transition={sharedTransition}
                 style={{
@@ -162,10 +167,15 @@ export function MenuBar() {
                   rotateX: 90,
                 }}
               >
-                <span
-                  className={`transition-colors duration-300 ${item.iconColor}`}
-                >
-                  {item.icon}
+                <span className="text-gray-600 dark:text-gray-300 transition-colors duration-300 group-hover:text-inherit">
+                  <div
+                    className={`${item.iconColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                  >
+                    {item.icon}
+                  </div>
+                  <div className="opacity-100 group-hover:opacity-0 transition-opacity duration-300 -mt-5">
+                    {item.icon}
+                  </div>
                 </span>
                 <span className="hidden sm:inline">{item.label}</span>
               </motion.a>
