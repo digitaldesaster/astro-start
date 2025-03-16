@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { BackgroundBeamsWithCollision } from '../components/ui/aceternity/beams';
 import { AnimatedTooltipPreview } from '../components/ui/aceternity/animated-tooltip-demo';
 import { MenuBar } from '../components/ui/v0/MenuBar';
-import { TextContent } from '../components/ui/aceternity/TextContent';
+import { TextContent } from '../components/ui/aceternity/beam-tooltip-demo';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -17,8 +17,8 @@ import { TextContent } from '../components/ui/aceternity/TextContent';
 		
 		<div class="w-full flex-1">
 			<BackgroundBeamsWithCollision client:load className="!h-[calc(100vh-120px)]">
-				<div class="relative z-10 flex flex-col items-center justify-center w-full h-full text-center">
-					<div class="w-full max-w-4xl mx-auto px-4">
+				<div class="relative z-10 flex flex-col w-full h-full text-center">
+					<div class="w-full max-w-4xl mx-auto">
 						<TextContent client:load />
 					</div>
 				</div>
