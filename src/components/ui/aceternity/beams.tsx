@@ -3,32 +3,65 @@ import { cn } from "../../../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
 
-// Add a hook for theme-aware styling
+// Add global type declaration for window.theme
+declare global {
+  interface Window {
+    theme?: string;
+  }
+}
+
+// More direct theme detection with a ref to prevent re-render delay
 const useThemeAwareStyle = () => {
+  // Use a ref for instant theme access without re-renders
+  const isDarkModeRef = useRef(false);
+  // Keep state for component rendering
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Initialize from document class on mount
-    setIsDarkMode(document.documentElement.classList.contains("dark"));
+    // Function to check theme and update both ref and state
+    const updateTheme = () => {
+      const newIsDarkMode = document.documentElement.classList.contains("dark");
+      // Update the ref immediately (no re-render delay)
+      isDarkModeRef.current = newIsDarkMode;
+      // Update state for rendering
+      setIsDarkMode(newIsDarkMode);
+    };
 
-    // Set up an observer to watch for class changes on html element
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (
-          mutation.attributeName === "class" &&
-          mutation.target === document.documentElement
-        ) {
-          setIsDarkMode(document.documentElement.classList.contains("dark"));
-        }
-      });
-    });
+    // Initialize on mount
+    updateTheme();
 
+    // Direct, faster theme change event handler
+    const handleThemeChange = (e: CustomEvent<{ theme: string }>) => {
+      const newIsDarkMode = e.detail.theme === "dark";
+      // Update ref immediately
+      isDarkModeRef.current = newIsDarkMode;
+      // Update state for rendering
+      setIsDarkMode(newIsDarkMode);
+    };
+
+    window.addEventListener("themeChange", handleThemeChange as EventListener);
+
+    // Simpler MutationObserver as fallback
+    const observer = new MutationObserver(updateTheme);
     observer.observe(document.documentElement, { attributes: true });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener(
+        "themeChange",
+        handleThemeChange as EventListener
+      );
+    };
   }, []);
 
-  return { isDarkMode };
+  return { isDarkMode, isDarkModeRef };
+};
+
+// Function to get current theme shadow without state delay
+const getThemeShadow = (isDarkMode: boolean) => {
+  return isDarkMode
+    ? "0 0 24px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 4px rgba(0, 0, 0, 0.4), 0 16px 68px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(80, 80, 80, 0.1) inset"
+    : "0 0 24px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1), 0 16px 68px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(80, 80, 80, 0.05) inset";
 };
 
 interface BeamOptions {
@@ -43,6 +76,10 @@ interface BeamOptions {
   repeatDelay?: number;
 }
 
+// Define CSS class for the container
+const lightShadow = "0 0 24px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1), 0 16px 68px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(80, 80, 80, 0.05) inset";
+const darkShadow = "0 0 24px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 4px rgba(0, 0, 0, 0.4), 0 16px 68px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(80, 80, 80, 0.1) inset";
+
 export const BackgroundBeamsWithCollision = ({
   children,
   className,
@@ -52,7 +89,26 @@ export const BackgroundBeamsWithCollision = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
-  const { isDarkMode } = useThemeAwareStyle();
+
+  // Update box-shadow with CSS custom properties for theme changes
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.setProperty('--beam-shadow', lightShadow);
+      containerRef.current.style.boxShadow = 'var(--beam-shadow)';
+      
+      // Add a mutation observer to watch for dark mode class
+      const observer = new MutationObserver(() => {
+        if (containerRef.current) {
+          const isDark = document.documentElement.classList.contains('dark');
+          containerRef.current.style.setProperty('--beam-shadow', isDark ? darkShadow : lightShadow);
+        }
+      });
+      
+      observer.observe(document.documentElement, { attributes: true });
+      
+      return () => observer.disconnect();
+    }
+  }, []);
 
   const beams = [
     {
@@ -145,7 +201,7 @@ export const BackgroundBeamsWithCollision = ({
     <div
       ref={parentRef}
       className={cn(
-        "h-96 md:h-[40rem] bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-black relative flex items-center w-full justify-center overflow-hidden",
+        "h-96 md:h-[40rem] bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-black relative flex items-center w-full justify-center overflow-hidden transition-colors duration-100",
         className
       )}
     >
@@ -161,12 +217,8 @@ export const BackgroundBeamsWithCollision = ({
       {children}
       <div
         ref={containerRef}
-        className="absolute bottom-0 bg-white dark:bg-black w-full inset-x-0 pointer-events-none"
-        style={{
-          boxShadow: isDarkMode 
-            ? "0 0 24px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 4px rgba(0, 0, 0, 0.4), 0 16px 68px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(80, 80, 80, 0.1) inset"
-            : "0 0 24px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1), 0 16px 68px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(80, 80, 80, 0.05) inset",
-        }}
+        className="absolute bottom-0 bg-white dark:bg-black w-full inset-x-0 pointer-events-none transition-colors duration-100"
+        style={{ transition: "box-shadow 100ms ease-in-out" }}
       ></div>
     </div>
   );
@@ -265,7 +317,7 @@ const CollisionMechanism = React.forwardRef<
           repeatDelay: beamOptions.repeatDelay || 0,
         }}
         className={cn(
-          "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent dark:from-indigo-600 dark:via-purple-600 dark:to-transparent",
+          "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent dark:from-indigo-600 dark:via-purple-600 dark:to-transparent transition-colors duration-100",
           beamOptions.className
         )}
       />

@@ -35,30 +35,27 @@ const sharedTransition = {
 export function ThemeToggle() {
   const [theme, setTheme] = useState("light");
 
+  // Initialize theme from localStorage on mount
   useEffect(() => {
-    // Initialize theme from localStorage or default to light
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
   }, []);
 
   const toggleTheme = () => {
+    // Simple toggle between light and dark
     const newTheme = theme === "light" ? "dark" : "light";
 
-    // Update state
+    // Update component state
     setTheme(newTheme);
 
     // Update localStorage
     localStorage.setItem("theme", newTheme);
 
-    // Update DOM
+    // Direct DOM manipulation - this is what actually changes the theme
+    // Remove both classes first to ensure clean state
     document.documentElement.classList.remove("light", "dark");
+    // Add the new theme class
     document.documentElement.classList.add(newTheme);
-
-    // Dispatch custom event for theme change
-    if (typeof window !== "undefined" && window.themeChangeEvent) {
-      window.themeChangeEvent.dispatchEvent(new Event("themeChanged"));
-    }
   };
 
   return (

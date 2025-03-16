@@ -10,19 +10,19 @@ import { TextContent } from '../components/ui/aceternity/beam-tooltip-demo';
 ---
 
 <Layout title="Shadcn UI + Astro">
-	<main class="flex flex-col items-center justify-start bg-neutral-50 dark:bg-neutral-950 overflow-hidden">
-		<div class="w-full max-w-4xl mx-auto px-4 py-8">
+	<main class="min-h-screen flex flex-col items-center justify-start py-8 bg-neutral-50 dark:bg-neutral-950 overflow-hidden">
+		<div class="w-full max-w-4xl mx-auto px-4">
 			<MenuBar client:load />
-		</div>
-		
-		<div class="w-full flex-1">
-			<BackgroundBeamsWithCollision client:load className="!h-[calc(100vh-120px)]">
-				<div class="relative z-10 flex flex-col w-full h-full text-center">
-					<div class="w-full max-w-4xl mx-auto">
-						<TextContent client:load />
+			
+			<div class="mt-8 w-full">
+				<BackgroundBeamsWithCollision client:load className="!h-[calc(100vh-180px)]">
+					<div class="relative z-10 flex flex-col w-full h-full text-center">
+						<div class="w-full max-w-4xl mx-auto">
+							<TextContent client:load />
+						</div>
 					</div>
-				</div>
-			</BackgroundBeamsWithCollision>
+				</BackgroundBeamsWithCollision>
+			</div>
 		</div>
 	</main>
 </Layout>
@@ -30,12 +30,5 @@ import { TextContent } from '../components/ui/aceternity/beam-tooltip-demo';
 <style>
 	main {
 		scroll-behavior: smooth;
-		min-height: 100vh;
-	}
-
-	html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
 	}
 </style>
