@@ -1,4 +1,95 @@
-# Astro Starter Kit: Basics
+# Astro Starter with React & Tailwind CSS
+
+A modern starter template for Astro that includes React and Tailwind CSS integration. Features a beautiful hero component with gradient effects and responsive design.
+
+## 🚀 Features
+
+- ⚡️ **Astro** - The web framework for content-driven websites
+- ⚛️ **React** - For interactive components
+- 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 📱 **Responsive Design** - Mobile-first approach
+- 🎭 **Modern UI** - Beautiful gradient effects and animations
+
+## 🛠️ Quick Start
+
+### Clone the repository
+
+```bash
+git clone https://github.com/digitaldesaster/astro-start.git
+cd astro-start
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start development server
+
+```bash
+npm run dev
+```
+
+Your site will be available at `http://localhost:4321`
+
+## 📦 Project Structure
+
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── components/
+│   │   └── Hero.tsx        # React hero component
+│   ├── layouts/
+│   │   └── Layout.astro    # Main layout component
+│   ├── pages/
+│   │   └── index.astro     # Home page
+│   └── styles/
+│       └── global.css      # Global styles & Tailwind imports
+└── package.json
+```
+
+## 🔧 Commands
+
+| Command           | Action                               |
+| :---------------- | :----------------------------------- |
+| `npm install`     | Install dependencies                 |
+| `npm run dev`     | Start dev server at `localhost:4321` |
+| `npm run build`   | Build for production to `./dist/`    |
+| `npm run preview` | Preview production build             |
+
+## ⚙️ Customization
+
+### Modifying the Hero Component
+
+The hero component is located in `src/components/Hero.tsx`. You can modify the text, styling, and layout to match your needs.
+
+### Tailwind Configuration
+
+Tailwind CSS can be configured in the `tailwind.config.mjs` file. You can modify:
+
+- Color palette
+- Typography
+- Breakpoints
+- And more
+
+### Adding New Pages
+
+Create new `.astro` files in the `src/pages` directory. They will be automatically converted to pages.
+
+## 📝 License
+
+MIT License
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ```sh
 npm create astro@latest -- --template basics
