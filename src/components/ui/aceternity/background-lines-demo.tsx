@@ -1,5 +1,5 @@
 import React from "react";
-import { BackgroundLines } from "@/components/ui/background-lines";
+import { BackgroundLines } from "./background-lines";
 
 export function BackgroundLinesDemo() {
   return (

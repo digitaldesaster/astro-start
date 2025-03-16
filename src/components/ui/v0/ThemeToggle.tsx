@@ -54,6 +54,11 @@ export function ThemeToggle() {
     // Update DOM
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(newTheme);
+
+    // Dispatch custom event for theme change
+    if (typeof window !== "undefined" && window.themeChangeEvent) {
+      window.themeChangeEvent.dispatchEvent(new Event("themeChanged"));
+    }
   };
 
   return (

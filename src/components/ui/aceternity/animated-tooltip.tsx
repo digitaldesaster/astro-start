@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   useTransform,
@@ -7,6 +7,34 @@ import {
   useMotionValue,
   useSpring,
 } from "motion/react";
+
+// Add a hook for theme-aware styling
+const useThemeAwareStyle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Initialize from document class on mount
+    setIsDarkMode(document.documentElement.classList.contains("dark"));
+
+    // Set up an observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.attributeName === "class" &&
+          mutation.target === document.documentElement
+        ) {
+          setIsDarkMode(document.documentElement.classList.contains("dark"));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { isDarkMode };
+};
 
 export const AnimatedTooltip = ({
   items,
@@ -19,6 +47,7 @@ export const AnimatedTooltip = ({
   }[];
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const { isDarkMode } = useThemeAwareStyle();
   const springConfig = { stiffness: 100, damping: 5 };
   const x = useMotionValue(0); // going to set this value on mouse move
   // rotate the tooltip
@@ -64,15 +93,25 @@ export const AnimatedTooltip = ({
                   translateX: translateX,
                   rotate: rotate,
                   whiteSpace: "nowrap",
+                  backgroundColor: isDarkMode ? "#000" : "#fff",
+                  color: isDarkMode ? "#fff" : "#000",
                 }}
-                className="absolute -top-16 -left-1/2 translate-x-1/2 flex text-xs  flex-col items-center justify-center rounded-md bg-black z-50 shadow-xl px-4 py-2"
+                className="absolute -top-16 -left-1/2 translate-x-1/2 flex text-xs flex-col items-center justify-center rounded-md z-50 shadow-xl px-4 py-2"
               >
                 <div className="absolute inset-x-10 z-30 w-[20%] -bottom-px bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px " />
                 <div className="absolute left-10 w-[40%] z-30 -bottom-px bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px " />
-                <div className="font-bold text-white relative z-30 text-base">
+                <div
+                  className="font-bold relative z-30 text-base"
+                  style={{ color: isDarkMode ? "#fff" : "#000" }}
+                >
                   {item.name}
                 </div>
-                <div className="text-white text-xs">{item.designation}</div>
+                <div
+                  style={{ color: isDarkMode ? "#fff" : "#6b7280" }}
+                  className="text-xs"
+                >
+                  {item.designation}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>

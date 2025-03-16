@@ -1,7 +1,35 @@
 "use client";
-import { cn } from "../lib/utils";
+import { cn } from "../../../lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import React, { useRef, useState, useEffect } from "react";
+
+// Add a hook for theme-aware styling
+const useThemeAwareStyle = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Initialize from document class on mount
+    setIsDarkMode(document.documentElement.classList.contains("dark"));
+
+    // Set up an observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.attributeName === "class" &&
+          mutation.target === document.documentElement
+        ) {
+          setIsDarkMode(document.documentElement.classList.contains("dark"));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return { isDarkMode };
+};
 
 interface BeamOptions {
   initialX?: number;
@@ -24,6 +52,7 @@ export const BackgroundBeamsWithCollision = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
+  const { isDarkMode } = useThemeAwareStyle();
 
   const beams = [
     {
@@ -116,7 +145,7 @@ export const BackgroundBeamsWithCollision = ({
     <div
       ref={parentRef}
       className={cn(
-        "h-96 md:h-[40rem] bg-gradient-to-b from-neutral-950 to-black relative flex items-center w-full justify-center overflow-hidden",
+        "h-96 md:h-[40rem] bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-950 dark:to-black relative flex items-center w-full justify-center overflow-hidden",
         className
       )}
     >
@@ -132,10 +161,11 @@ export const BackgroundBeamsWithCollision = ({
       {children}
       <div
         ref={containerRef}
-        className="absolute bottom-0 bg-black w-full inset-x-0 pointer-events-none"
+        className="absolute bottom-0 bg-white dark:bg-black w-full inset-x-0 pointer-events-none"
         style={{
-          boxShadow:
-            "0 0 24px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 4px rgba(0, 0, 0, 0.4), 0 16px 68px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(80, 80, 80, 0.1) inset",
+          boxShadow: isDarkMode 
+            ? "0 0 24px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 4px rgba(0, 0, 0, 0.4), 0 16px 68px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(80, 80, 80, 0.1) inset"
+            : "0 0 24px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 4px rgba(0, 0, 0, 0.1), 0 16px 68px rgba(0, 0, 0, 0.2), 0 1px 0 rgba(80, 80, 80, 0.05) inset",
         }}
       ></div>
     </div>
@@ -235,7 +265,7 @@ const CollisionMechanism = React.forwardRef<
           repeatDelay: beamOptions.repeatDelay || 0,
         }}
         className={cn(
-          "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-600 via-purple-600 to-transparent",
+          "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent dark:from-indigo-600 dark:via-purple-600 dark:to-transparent",
           beamOptions.className
         )}
       />
