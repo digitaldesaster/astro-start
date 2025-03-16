@@ -1,12 +1,13 @@
-# Astro Starter with React & Tailwind CSS
+# Astro Starter with React, Tailwind & Shadcn UI
 
-A modern starter template for Astro that includes React and Tailwind CSS integration. Features a beautiful hero component with gradient effects and responsive design.
+A modern starter template for Astro that includes React, Tailwind CSS, and Shadcn UI integration. Features a beautiful hero component with gradient effects and responsive design.
 
 ## 🚀 Features
 
 - ⚡️ **Astro** - The web framework for content-driven websites
 - ⚛️ **React** - For interactive components
 - 🎨 **Tailwind CSS** - Utility-first CSS framework
+- 🎯 **Shadcn UI** - Re-usable components built with Radix UI and Tailwind
 - 📱 **Responsive Design** - Mobile-first approach
 - 🎭 **Modern UI** - Beautiful gradient effects and animations
 
@@ -41,13 +42,15 @@ Your site will be available at `http://localhost:4321`
 │   └── favicon.svg
 ├── src/
 │   ├── components/
-│   │   └── Hero.tsx        # React hero component
+│   │   ├── ui/            # Shadcn UI components
+│   │   │   └── button.tsx
+│   │   └── Hero.tsx      # Example hero component
 │   ├── layouts/
-│   │   └── Layout.astro    # Main layout component
+│   │   └── Layout.astro  # Main layout with shadcn theme
 │   ├── pages/
-│   │   └── index.astro     # Home page
+│   │   └── index.astro   # Home page
 │   └── styles/
-│       └── global.css      # Global styles & Tailwind imports
+│       └── global.css    # Global styles & Tailwind imports
 └── package.json
 ```
 
@@ -62,18 +65,26 @@ Your site will be available at `http://localhost:4321`
 
 ## ⚙️ Customization
 
-### Modifying the Hero Component
+### Adding Shadcn Components
 
-The hero component is located in `src/components/Hero.tsx`. You can modify the text, styling, and layout to match your needs.
+To add more shadcn components, use the following command:
 
-### Tailwind Configuration
+```bash
+npx shadcn@latest add [component-name]
+```
 
-Tailwind CSS can be configured in the `tailwind.config.mjs` file. You can modify:
+For example:
 
-- Color palette
-- Typography
-- Breakpoints
-- And more
+```bash
+npx shadcn@latest add card
+npx shadcn@latest add dropdown-menu
+```
+
+### Modifying Components
+
+- **UI Components**: Find shadcn components in `src/components/ui/`
+- **Hero Component**: The example hero is in `src/components/Hero.tsx`
+- **Theme**: Customize colors and styling in `tailwind.config.mjs`
 
 ### Adding New Pages
 

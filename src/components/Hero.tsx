@@ -1,40 +1,40 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
-    <div className="relative isolate px-6 pt-14 lg:px-8">
-      <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-        <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
-      </div>
-
-      <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Welcome to My Astro Site
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            Built with Astro, React, and Tailwind CSS for lightning-fast
-            performance and beautiful design.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6">
-            <a
-              href="#"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Get started
-            </a>
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Learn more <span aria-hidden="true">→</span>
-            </a>
-          </div>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-theme(spacing.16))] relative">
+      {/* Gradient decorations */}
+      <div className="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
+        <div className="absolute left-1/2 top-0 ml-[-38rem] h-[25rem] w-[81.25rem] dark:[mask-image:linear-gradient(white,transparent)]">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#36b49f] to-[#DBFF75] opacity-40 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] dark:from-[#36b49f]/30 dark:to-[#DBFF75]/30 dark:opacity-100"></div>
         </div>
       </div>
 
-      <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-        <div className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]" />
+      <div className="relative flex flex-col items-center text-center">
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
+            Build your next idea even faster
+          </h1>
+          <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+            Beautifully designed components built with Radix UI and Tailwind
+            CSS.
+          </p>
+        </div>
+
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <Button size="lg">Get Started</Button>
+          <Button size="lg" variant="outline">
+            GitHub
+          </Button>
+        </div>
+      </div>
+
+      {/* Bottom gradient */}
+      <div className="absolute inset-0 -z-10 mx-0 max-w-none overflow-hidden">
+        <div className="absolute left-1/2 bottom-0 ml-[-38rem] h-[25rem] w-[81.25rem]">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#36b49f] to-[#DBFF75] opacity-40 [mask-image:radial-gradient(farthest-side_at_bottom,white,transparent)] dark:from-[#36b49f]/30 dark:to-[#DBFF75]/30 dark:opacity-100"></div>
+        </div>
       </div>
     </div>
   );

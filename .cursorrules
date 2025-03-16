@@ -1,0 +1,129 @@
+You are an expert in JavaScript, TypeScript, and Astro framework for scalable web development.
+
+Key Principles
+
+- Write concise, technical responses with accurate Astro examples.
+- Leverage Astro's partial hydration and multi-framework support effectively.
+- Prioritize static generation and minimal JavaScript for optimal performance.
+- Use descriptive variable names and follow Astro's naming conventions.
+- Organize files using Astro's file-based routing system.
+- Utilize Shadcn UI components with proper client-side hydration
+
+Astro Project Structure
+
+- Use the recommended Astro project structure:
+  - src/
+    - components/
+      - ui/ # Shadcn UI components
+      - Hero.tsx # Example React components
+    - layouts/
+    - pages/
+    - styles/
+  - public/
+  - astro.config.mjs
+
+Component Development
+
+- Create .astro files for Astro components.
+- Use React components with proper client:load directives for interactivity
+- Implement Shadcn UI components using their official patterns
+- Implement proper component composition and reusability.
+- Use Astro's component props for data passing.
+
+Routing and Pages
+
+- Utilize Astro's file-based routing system in the src/pages/ directory.
+- Implement dynamic routes using [...slug].astro syntax.
+- Use getStaticPaths() for generating static pages with dynamic routes.
+- Implement proper 404 handling with a 404.astro page.
+
+Content Management
+
+- Use Markdown (.md) or MDX (.mdx) files for content-heavy pages.
+- Leverage Astro's built-in support for frontmatter in Markdown files.
+- Implement content collections for organized content management.
+
+Styling
+
+- Use Tailwind CSS v4 utility classes for styling
+- Implement CSS-first configuration with @theme directives
+- Follow Shadcn UI's styling patterns and variants
+- Use responsive utilities (sm:, md:, lg:) for different screen sizes
+- Customize theme using CSS variables in global.css
+
+Performance Optimization
+
+- Minimize use of client-side JavaScript; leverage Astro's static generation.
+- Use client:load for Shadcn UI components that require interactivity
+- Implement proper lazy loading for images and other assets.
+- Utilize Astro's built-in asset optimization features.
+
+Data Fetching
+
+- Use Astro.props for passing data to components.
+- Implement getStaticPaths() for fetching data at build time.
+- Use Astro.glob() for working with local files efficiently.
+- Implement proper error handling for data fetching operations.
+
+SEO and Meta Tags
+
+- Use Astro's <head> tag for adding meta information.
+- Implement canonical URLs for proper SEO.
+- Use the <SEO> component pattern for reusable SEO setups.
+
+Integrations and Plugins
+
+- Use official Astro integrations:
+  - @astrojs/react for React support
+  - @astrojs/tailwind for Tailwind CSS
+- Implement proper configuration for integrations in astro.config.mjs.
+
+Build and Deployment
+
+- Optimize the build process using Astro's build command.
+- Implement proper environment variable handling for different environments.
+- Use static hosting platforms compatible with Astro (Netlify, Vercel, etc.).
+- Implement proper CI/CD pipelines for automated builds and deployments.
+
+Styling with Tailwind CSS
+
+- Use Tailwind CSS v4 with CSS-first configuration
+- Define theme customizations using @theme directive
+- Follow Shadcn UI's component styling patterns
+- Never use @apply directive (as per project standards)
+
+Tailwind v4 Best Practices
+
+- Use Tailwind utility classes extensively in your Astro components.
+- Leverage Tailwind's responsive design utilities (sm:, md:, lg:, etc.).
+- Use CSS variables for theme customization
+- Implement custom variants using @custom-variant directive
+- Never use the @apply directive
+
+Testing
+
+- Implement unit tests for utility functions and helpers.
+- Use end-to-end testing tools like Cypress for testing the built site.
+- Implement visual regression testing if applicable.
+
+Accessibility
+
+- Ensure proper semantic HTML structure in Astro components.
+- Implement ARIA attributes where necessary.
+- Ensure keyboard navigation support for interactive elements.
+
+Key Conventions
+
+1. Follow Astro's Style Guide for consistent code formatting.
+2. Use TypeScript for enhanced type safety and developer experience.
+3. Implement proper error handling and logging.
+4. Leverage Astro's RSS feed generation for content-heavy sites.
+5. Use Astro's Image component for optimized image delivery.
+
+Performance Metrics
+
+- Prioritize Core Web Vitals (LCP, FID, CLS) in development.
+- Use Lighthouse and WebPageTest for performance auditing.
+- Implement performance budgets and monitoring.
+
+Refer to Astro's official documentation for detailed information on components, routing, and integrations for best practices.
